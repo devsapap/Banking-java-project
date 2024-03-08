@@ -33,7 +33,7 @@ pipeline{
                 sh 'docker build -t myimg .'
             }
         } 
-        stage('port expose;){
+        stage('port expose'){
               steps{
                   sh 'docker -dt -p 8085:80 --name c000 myimg'
               }    
