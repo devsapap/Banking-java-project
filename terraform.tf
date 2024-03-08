@@ -10,7 +10,7 @@ terraform {
 
 # Configure the AWS provider
 provider "aws" {
-  region = "ap-south-1"
+  region = "us-east-1"
 }
 # Creating a VPC
 resource "aws_vpc" "proj-vpc" {
@@ -46,7 +46,7 @@ resource "aws_route_table" "proj-rt" {
 resource "aws_subnet" "proj-subnet" {
  vpc_id = aws_vpc.proj-vpc.id
  cidr_block = "10.0.1.0/24"
- availability_zone = "ap-south-1b"
+ availability_zone = "us-east-1"
  tags = {
  Name = "subnet1"
  }
@@ -126,10 +126,10 @@ resource "aws_eip" "proj-eip" {
 
 # Creating an ubuntu EC2 instance
 resource "aws_instance" "Prod-Server" {
- ami = "ami-0ef82eeba2c7a0eeb"
+ ami = "ami-03ec1e27f78616cec"
  instance_type = "t2.micro"
- availability_zone = "ap-south-1b"
- key_name = "chefkeypair"
+ availability_zone = "us-east-1"
+ key_name = "bankpro"
  network_interface {
  device_index = 0
  network_interface_id = aws_network_interface.proj-ni.id
@@ -137,10 +137,10 @@ resource "aws_instance" "Prod-Server" {
  user_data  = <<-EOF
  #!/bin/bash
      sudo apt-get update -y
-     sudo apt install docker.io -y
-     sudo systemctl enable docker
-     sudo docker run -itd -p 8085:8081 srinivas:1.0
-     sudo docker start $(docker ps -aq)
+     sudo apt-get update -y
+     sudo apt-get install -y apache2
+     sudo systemctl start apache2
+     sudo systemctl enable apache2
  EOF
  tags = {
  Name = "Prod-Server"
