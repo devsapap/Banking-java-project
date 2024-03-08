@@ -26,7 +26,7 @@ pipeline{
         stage('package with srinivas'){
             steps{
                 sh 'mvn package'
-            }            }
+            }            
         }
     }
 }   
